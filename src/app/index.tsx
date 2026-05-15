@@ -1,23 +1,20 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { THEME } from "./styles/constants";
-import { Button } from "./Components/Buttons";
+import { THEME } from "../styles/constants";
+import { Button } from "../Components/Buttons";
 
-export default function SucessoScreen() {
+export default function IndexScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.title}>Convite criado com sucesso!</Text>
+        <Text style={styles.logo}>ConvidaAI</Text>
         <Text style={styles.subtitle}>
-          Seu convite está pronto. Compartilhe com seus amigos e faça a festa!
+          Seu App de convite para Eventos Inteligente
         </Text>
       </View>
 
-      <View style={styles.footerContainer}>
-        <Button label="Criar outro cartão" variant={"primary"} />
-        <Button label="Voltar ao início" variant={"secondary"} />
-      </View>
+      <Button label="Criar Convite" variant={"primary"} />
     </SafeAreaView>
   );
 }
@@ -34,14 +31,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     height: 750,
-    gap: 12,
   },
-  title: {
+  logo: {
     color: THEME.colors.primary,
     fontWeight: "bold",
-    fontSize: THEME.text.heading.h2,
-    width: 200,
-    textAlign: "center",
+    fontSize: 56,
   },
   subtitle: {
     color: THEME.colors.subtitle,
@@ -50,8 +44,19 @@ const styles = StyleSheet.create({
     width: 200,
     textAlign: "center",
   },
-  footerContainer: {
-    flexDirection: "column",
-    gap: 12,
+  buttonContainer: {
+    backgroundColor: THEME.colors.primary,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    borderRadius: THEME.border.radius.md,
+  },
+  buttonText: {
+    color: THEME.colors.primary_foreground,
+    fontWeight: "500",
+    fontSize: 24,
   },
 });
+

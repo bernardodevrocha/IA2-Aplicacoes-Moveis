@@ -7,11 +7,12 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from "react-native";
-import { Button } from "./Components/Buttons";
-import { CardConvite } from "./Components/CardConvite";
-import { THEME } from "./styles/constants";
-import { Input } from "./Components/Input";
-import { ButtonGroupColors } from "./Components/ButtonGroupColors";
+import { Button } from "../Components/Buttons";
+import { CardConvite } from "../Components/CardConvite";
+import { THEME } from "../styles/constants";
+import { Input } from "../Components/Input";
+import { ButtonGroupColors } from "../Components/ButtonGroupColors";
+import { useRouter } from "expo-router";
 
 const CARD_COLORS = [
   {
@@ -59,6 +60,7 @@ type Error = {
 };
 
 export default function CadastroScreen() {
+  const router = useRouter();
   const [form, setForm] = useState<{ data: Form; errors: Error }>({
     data: {
       fullName: "",
@@ -99,6 +101,13 @@ export default function CadastroScreen() {
           [field]: error,
         },
       };
+    });
+  }
+
+  function handleSubmit() {
+    router.push({
+      pathname: "/preview",
+      params: form.data,
     });
   }
 
@@ -212,6 +221,9 @@ export default function CadastroScreen() {
               onChange={() => {
                 handleInputValidation("fullName");
               }}
+              onBlur={() => {
+                handleInputValidation("fullName");
+              }}
               errorMessage={form.errors["fullName"]}
             />
             <Input
@@ -219,35 +231,71 @@ export default function CadastroScreen() {
               label="Nome Festa"
               placeholder="Festa do João"
               errorMessage={form.errors["partyName"]}
+              onChange={() => {
+                handleInputValidation("partyName");
+              }}
+              onBlur={() => {
+                handleInputValidation("partyName");
+              }}
             />
             <Input
               onChangeText={(text) => handleInputChange("food", text)}
               label="Comidas"
               placeholder="Lanche Partilhado"
+              onChange={() => {
+                handleInputValidation("food");
+              }}
+              onBlur={() => {
+                handleInputValidation("food");
+              }}
               errorMessage={form.errors["food"]}
             />
             <Input
               onChangeText={(text) => handleInputChange("hours", text)}
               label="Horario"
               placeholder="20:00"
+              onChange={() => {
+                handleInputValidation("hours");
+              }}
+              onBlur={() => {
+                handleInputValidation("hours");
+              }}
               errorMessage={form.errors["hours"]}
             />
             <Input
               onChangeText={(text) => handleInputChange("localization", text)}
               label="Localizacao"
               placeholder="Bairro Alecrim Dourado, Rua XYZ, 40"
+              onChange={() => {
+                handleInputValidation("localization");
+              }}
+              onBlur={() => {
+                handleInputValidation("localization");
+              }}
               errorMessage={form.errors["localization"]}
             />
             <Input
               onChangeText={(text) => handleInputChange("date", text)}
               label="Data"
               placeholder="10/05/2026"
+              onChange={() => {
+                handleInputValidation("date");
+              }}
+              onBlur={() => {
+                handleInputValidation("date");
+              }}
               errorMessage={form.errors["date"]}
             />
             <Input
               onChangeText={(text) => handleInputChange("description", text)}
               label="Descrição"
               placeholder="Festa mais do que especial!"
+              onChange={() => {
+                handleInputValidation("description");
+              }}
+              onBlur={() => {
+                handleInputValidation("description");
+              }}
               errorMessage={form.errors["description"]}
             />
           </View>
@@ -259,7 +307,7 @@ export default function CadastroScreen() {
 
         <Text>Cor Selecionada: {form.data.cardColor}</Text>
         <View style={styles.footerContainer}>
-          <Button label="Cadastrar Convite" />
+          <Button onPress={handleSubmit} label="Cadastrar Convite" />
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>

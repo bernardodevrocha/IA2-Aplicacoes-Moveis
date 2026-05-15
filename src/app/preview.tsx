@@ -1,8 +1,8 @@
 import React from "react";
 import { SafeAreaView, Text, StyleSheet, View } from "react-native";
-import { Button } from "./Components/Buttons";
-import { CardConvite } from "./Components/CardConvite";
-import { THEME } from "./styles/constants";
+import { Button } from "../Components/Buttons";
+import { CardConvite } from "../Components/CardConvite";
+import { THEME } from "../styles/constants";
 
 export default function PreviewScreen() {
   return (
@@ -43,3 +43,4 @@ const styles = StyleSheet.create({
     gap: 12,
   },
 });
+
