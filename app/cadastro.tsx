@@ -36,11 +36,128 @@ const CARD_COLORS = [
   },
 ];
 
-export default function CadastroScreen() {
-  const [selectedColorId, setselectedColorId] = useState<string | null>();
+type Form = {
+  fullName: string;
+  partyName: string;
+  food: string;
+  hours: string;
+  localization: string;
+  date: string;
+  description: string;
+  cardColor: string;
+};
 
-  function handleSelectColor(colorId: string) {
-    setselectedColorId(colorId);
+type Error = {
+  fullName?: string;
+  partyName?: string;
+  food?: string;
+  hours?: string;
+  localization?: string;
+  date?: string;
+  description?: string;
+  cardColor?: string;
+};
+
+export default function CadastroScreen() {
+  const [form, setForm] = useState<{ data: Form; errors: Error }>({
+    data: {
+      fullName: "",
+      partyName: "",
+      food: "",
+      hours: "",
+      localization: "",
+      date: "",
+      description: "",
+      cardColor: "",
+    },
+    errors: {},
+  });
+
+  function handleInputChange(name: keyof Form, text: string) {
+    setForm((currentForm) => {
+      return {
+        ...currentForm,
+        data: {
+          ...currentForm.data,
+          [name]: text,
+        },
+      };
+    });
+  }
+
+  function handleSetOrRemoveInputError(
+    name: keyof Form,
+    error: string | undefined,
+  ) {
+    setForm((currentForm) => {
+      return {
+        ...currentForm,
+        errors: {
+          ...currentForm.errors,
+          [name]: error,
+        },
+      };
+    });
+  }
+
+  function handleInputValidation(fields: keyof Form) {
+    switch (fields) {
+      case "fullName":
+        if (form.data.fullName.length === 0) {
+          handleSetOrRemoveInputError("fullName", "Informe o nome completo");
+        }
+        break;
+      case "partyName":
+        if (form.data.partyName.length === 0) {
+          handleSetOrRemoveInputError("partyName", "Digite o nome da festa");
+        }
+        break;
+      case "food":
+        if (form.data.food.length === 0) {
+          handleSetOrRemoveInputError(
+            "food",
+            "Informe qual tipo de comida tera",
+          );
+        }
+        break;
+      case "hours":
+        if (form.data.hours.length === 0) {
+          handleSetOrRemoveInputError("hours", "Digite um horario");
+        }
+        break;
+      case "localization":
+        if (form.data.localization.length === 0) {
+          handleSetOrRemoveInputError(
+            "localization",
+            "Coloque a localizacao da festa",
+          );
+        }
+        break;
+      case "date":
+        if (form.data.date.length === 0) {
+          handleSetOrRemoveInputError(
+            "date",
+            "Informe para seus convidados qual dia sera",
+          );
+        }
+        break;
+      case "description":
+        if (form.data.description.length === 0) {
+          handleSetOrRemoveInputError(
+            "description",
+            "Descreva como sera a festa para seus convidados",
+          );
+        }
+        break;
+      case "cardColor":
+        if (form.data.cardColor.length === 0) {
+          handleSetOrRemoveInputError(
+            "cardColor",
+            "Selecione uma cor do convite",
+          );
+        }
+        break;
+    }
   }
 
   return (
@@ -53,24 +170,51 @@ export default function CadastroScreen() {
 
         <View style={{ height: 700 }}>
           <View style={{ gap: 8, marginBottom: 12 }}>
-            <Input label="Nome Pessoa" placeholder="João Caetano" />
-            <Input label="Nome Festa" placeholder="Festa do João" />
-            <Input label="Comidas" placeholder="Lanche Partilhado" />
-            <Input label="Horario" placeholder="20:00" />
             <Input
+              onChangeText={(text) => handleInputChange("fullName", text)}
+              label="Nome Pessoa"
+              placeholder="João Caetano"
+              errorMessage={form.errors["fullName"]}
+            />
+            <Input
+              onChangeText={(text) => handleInputChange("partyName", text)}
+              label="Nome Festa"
+              placeholder="Festa do João"
+              errorMessage={form.errors["fullName"]}
+            />
+            <Input
+              onChangeText={(text) => handleInputChange("food", text)}
+              label="Comidas"
+              placeholder="Lanche Partilhado"
+            />
+            <Input
+              onChangeText={(text) => handleInputChange("hours", text)}
+              label="Horario"
+              placeholder="20:00"
+            />
+            <Input
+              onChangeText={(text) => handleInputChange("localization", text)}
               label="Localizacao"
               placeholder="Bairro Alecrim Dourado, Rua XYZ, 40"
             />
-            <Input label="Data" placeholder="10/05/2026" />
             <Input
+              onChangeText={(text) => handleInputChange("date", text)}
+              label="Data"
+              placeholder="10/05/2026"
+            />
+            <Input
+              onChangeText={(text) => handleInputChange("description", text)}
               label="Descrição"
               placeholder="Festa mais do que especial!"
             />
           </View>
-          <ButtonGroupColors onSelect={handleSelectColor} group={CARD_COLORS} />
+          <ButtonGroupColors
+            onSelect={(code) => handleInputChange("cardColor", code)}
+            group={CARD_COLORS}
+          />
         </View>
 
-        <Text>Cor Selecionada: {selectedColorId}</Text>
+        <Text>Cor Selecionada: {form.data.cardColor}</Text>
         <View style={styles.footerContainer}>
           <Button label="Cadastrar Convite" />
         </View>
