@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   Text,
@@ -73,20 +73,22 @@ export default function CadastroScreen() {
     errors: {},
   });
 
-  function handleInputChange(name: keyof Form, text: string) {
+  function handleInputChange(fieldName: keyof Form, text: string) {
     setForm((currentForm) => {
       return {
         ...currentForm,
         data: {
           ...currentForm.data,
-          [name]: text,
+          [fieldName]: text,
         },
       };
     });
+
+    handleInputValidation(fieldName);
   }
 
   function handleSetOrRemoveInputError(
-    name: keyof Form,
+    field: keyof Form,
     error: string | undefined,
   ) {
     setForm((currentForm) => {
@@ -94,7 +96,7 @@ export default function CadastroScreen() {
         ...currentForm,
         errors: {
           ...currentForm.errors,
-          [name]: error,
+          [field]: error,
         },
       };
     });
@@ -103,13 +105,20 @@ export default function CadastroScreen() {
   function handleInputValidation(fields: keyof Form) {
     switch (fields) {
       case "fullName":
-        if (form.data.fullName.length === 0) {
+        if (form.data.fullName.length < 3) {
           handleSetOrRemoveInputError("fullName", "Informe o nome completo");
+        }
+
+        if (form.data.fullName.length >= 3) {
+          handleSetOrRemoveInputError("fullName", undefined);
         }
         break;
       case "partyName":
         if (form.data.partyName.length === 0) {
           handleSetOrRemoveInputError("partyName", "Digite o nome da festa");
+        }
+        if (form.data.partyName.length > 0) {
+          handleSetOrRemoveInputError("partyName", undefined);
         }
         break;
       case "food":
@@ -119,10 +128,16 @@ export default function CadastroScreen() {
             "Informe qual tipo de comida tera",
           );
         }
+        if (form.data.food.length > 0) {
+          handleSetOrRemoveInputError("food", undefined);
+        }
         break;
       case "hours":
         if (form.data.hours.length === 0) {
           handleSetOrRemoveInputError("hours", "Digite um horario");
+        }
+        if (form.data.hours.length > 0) {
+          handleSetOrRemoveInputError("hours", undefined);
         }
         break;
       case "localization":
@@ -132,6 +147,9 @@ export default function CadastroScreen() {
             "Coloque a localizacao da festa",
           );
         }
+        if (form.data.localization.length > 0) {
+          handleSetOrRemoveInputError("localization", undefined);
+        }
         break;
       case "date":
         if (form.data.date.length === 0) {
@@ -139,6 +157,9 @@ export default function CadastroScreen() {
             "date",
             "Informe para seus convidados qual dia sera",
           );
+        }
+        if (form.data.date.length > 0) {
+          handleSetOrRemoveInputError("date", undefined);
         }
         break;
       case "description":
@@ -148,6 +169,9 @@ export default function CadastroScreen() {
             "Descreva como sera a festa para seus convidados",
           );
         }
+        if (form.data.description.length > 0) {
+          handleSetOrRemoveInputError("description", undefined);
+        }
         break;
       case "cardColor":
         if (form.data.cardColor.length === 0) {
@@ -156,16 +180,27 @@ export default function CadastroScreen() {
             "Selecione uma cor do convite",
           );
         }
+        if (form.data.cardColor.length > 0) {
+          handleSetOrRemoveInputError("cardColor", undefined);
+        }
+        break;
+      default:
         break;
     }
   }
+
+  useEffect(() => {
+    Object.keys(form.errors).length;
+  }, [form.errors]);
 
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView>
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Cadastro</Text>
-          <Text style={styles.subTitle}>Preencha seus dados</Text>
+          <Text style={styles.subTitle}>
+            Preencha seus dados {JSON.stringify(form.errors)}
+          </Text>
         </View>
 
         <View style={{ height: 700 }}>
@@ -174,38 +209,46 @@ export default function CadastroScreen() {
               onChangeText={(text) => handleInputChange("fullName", text)}
               label="Nome Pessoa"
               placeholder="João Caetano"
+              onChange={() => {
+                handleInputValidation("fullName");
+              }}
               errorMessage={form.errors["fullName"]}
             />
             <Input
               onChangeText={(text) => handleInputChange("partyName", text)}
               label="Nome Festa"
               placeholder="Festa do João"
-              errorMessage={form.errors["fullName"]}
+              errorMessage={form.errors["partyName"]}
             />
             <Input
               onChangeText={(text) => handleInputChange("food", text)}
               label="Comidas"
               placeholder="Lanche Partilhado"
+              errorMessage={form.errors["food"]}
             />
             <Input
               onChangeText={(text) => handleInputChange("hours", text)}
               label="Horario"
               placeholder="20:00"
+              errorMessage={form.errors["hours"]}
             />
             <Input
               onChangeText={(text) => handleInputChange("localization", text)}
               label="Localizacao"
               placeholder="Bairro Alecrim Dourado, Rua XYZ, 40"
+              errorMessage={form.errors["localization"]}
             />
             <Input
               onChangeText={(text) => handleInputChange("date", text)}
               label="Data"
               placeholder="10/05/2026"
+              errorMessage={form.errors["date"]}
             />
             <Input
               onChangeText={(text) => handleInputChange("description", text)}
               label="Descrição"
               placeholder="Festa mais do que especial!"
+              errorMessage={form.errors["description"]}
             />
           </View>
           <ButtonGroupColors
