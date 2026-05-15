@@ -4,17 +4,18 @@ import {
   StyleSheet,
   GestureResponderEvent,
 } from "react-native";
-import { styles } from "./styles";
+import { styles, styleVariant } from "./styles";
 
 type Props = {
   label: string;
+  variant?: "primary" | "secondary" | "outline";
   onPress?: (event: GestureResponderEvent) => void;
 };
 
-export function Button({ label, onPress }: Props) {
+export function Button({ label, variant = "primary", onPress }: Props) {
   return (
-    <TouchableOpacity style={styles.buttonContainer}>
-      <Text style={styles.buttonText}>{label}</Text>
+    <TouchableOpacity style={styleVariant[variant].buttonContainer}>
+      <Text style={styleVariant[variant].buttonText}>{label}</Text>
     </TouchableOpacity>
   );
 }

@@ -14,7 +14,7 @@ export default function IndexScreen() {
         </Text>
       </View>
 
-      <Button label="Criar Convite" />
+      <Button label="Criar Convite" variant={"primary"} />
     </SafeAreaView>
   );
 }
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     fontSize: 56,
   },
   subtitle: {
-    color: THEME.colors.primary_foreground,
+    color: THEME.colors.subtitle,
     fontWeight: "400",
     fontSize: 16,
     width: 200,

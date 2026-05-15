@@ -17,3 +17,31 @@ export const styles = StyleSheet.create({
     fontSize: 24,
   },
 });
+
+export const styleSecondary = StyleSheet.create({
+  buttonContainer: {
+    ...styles.buttonContainer,
+    backgroundColor: "trasnparent",
+  },
+  buttonText: {
+    ...styles.buttonText,
+    color: THEME.colors.primary,
+  },
+});
+
+export const styleOutline = StyleSheet.create({
+  buttonContainer: {
+    ...styles.buttonContainer,
+    backgroundColor: "trasnparent",
+  },
+  buttonText: {
+    ...styles.buttonText,
+    color: THEME.colors.primary,
+  },
+});
+
+export const styleVariant = {
+  primary: styles,
+  secondary: styleSecondary,
+  outline: styles,
+} as const;

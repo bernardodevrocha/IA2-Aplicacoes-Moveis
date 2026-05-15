@@ -8,15 +8,15 @@ export default function SucessoScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.logo}>Sucesso</Text>
+        <Text style={styles.title}>Convite criado com sucesso!</Text>
         <Text style={styles.subtitle}>
-          Seu App de convite para Eventos Inteligente
+          Seu convite está pronto. Compartilhe com seus amigos e faça a festa!
         </Text>
       </View>
 
       <View style={styles.footerContainer}>
-        <Button label="Criar outro cartão" />
-        <Button label="Voltar ao início" />
+        <Button label="Criar outro cartão" variant={"primary"} />
+        <Button label="Voltar ao início" variant={"secondary"} />
       </View>
     </SafeAreaView>
   );
@@ -34,31 +34,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     height: 750,
+    gap: 12,
   },
-  logo: {
+  title: {
     color: THEME.colors.primary,
     fontWeight: "bold",
-    fontSize: 56,
+    fontSize: THEME.text.heading.h2,
+    width: 200,
+    textAlign: "center",
   },
   subtitle: {
-    color: THEME.colors.primary_foreground,
+    color: THEME.colors.subtitle,
     fontWeight: "400",
     fontSize: 16,
     width: 200,
     textAlign: "center",
   },
-  buttonContainer: {
-    backgroundColor: THEME.colors.primary,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignContent: "center",
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: THEME.border.radius.md,
-  },
-  buttonText: {
-    color: THEME.colors.primary_foreground,
-    fontWeight: "500",
-    fontSize: 24,
+  footerContainer: {
+    flexDirection: "column",
+    gap: 12,
   },
 });
