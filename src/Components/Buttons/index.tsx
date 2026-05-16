@@ -1,10 +1,5 @@
-import {
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  GestureResponderEvent,
-} from "react-native";
-import { styles, styleVariant } from "./styles";
+import { Text, TouchableOpacity, GestureResponderEvent } from "react-native";
+import { styleVariant } from "./styles";
 
 type Props = {
   label: string;
@@ -14,7 +9,10 @@ type Props = {
 
 export function Button({ label, variant = "primary", onPress }: Props) {
   return (
-    <TouchableOpacity style={styleVariant[variant].buttonContainer}>
+    <TouchableOpacity
+      style={styleVariant[variant].buttonContainer}
+      onPress={onPress}
+    >
       <Text style={styleVariant[variant].buttonText}>{label}</Text>
     </TouchableOpacity>
   );

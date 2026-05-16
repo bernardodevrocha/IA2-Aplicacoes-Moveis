@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
 export const styleSecondary = StyleSheet.create({
   buttonContainer: {
     ...styles.buttonContainer,
-    backgroundColor: "trasnparent",
+    backgroundColor: "transparent",
   },
   buttonText: {
     ...styles.buttonText,
@@ -32,7 +32,9 @@ export const styleSecondary = StyleSheet.create({
 export const styleOutline = StyleSheet.create({
   buttonContainer: {
     ...styles.buttonContainer,
-    backgroundColor: "trasnparent",
+    backgroundColor: "transparent",
+    borderWidth: 2,
+    borderColor: THEME.colors.primary,
   },
   buttonText: {
     ...styles.buttonText,
@@ -43,5 +45,5 @@ export const styleOutline = StyleSheet.create({
 export const styleVariant = {
   primary: styles,
   secondary: styleSecondary,
-  outline: styles,
+  outline: styleOutline,
 } as const;

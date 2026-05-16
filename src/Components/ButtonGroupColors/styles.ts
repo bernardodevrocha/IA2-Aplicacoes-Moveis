@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 8,
     alignItems: "center",
+    flexWrap: "wrap",
   },
   buttonContainer: {
     borderWidth: 2,
@@ -16,13 +17,14 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    flex: 1,
+    minWidth: 150,
+    flexGrow: 1,
   },
   buttonGroupButtonColorIndicator: {
     backgroundColor: "#3838cd",
     height: 24,
     width: 24,
-    borderRadius: "100%",
+    borderRadius: 12,
   },
   buttonGroupButtonText: {
     color: "#7d7d7d",

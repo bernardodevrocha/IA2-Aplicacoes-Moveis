@@ -1,25 +1,39 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { THEME } from "../../styles/constants";
+import { Form } from "../../app/cadastro";
 
-export function CardConvite() {
+type Props = {
+  data: Form;
+};
+
+export function CardConvite({ data }: Props) {
+  const fullName = data.fullName ?? "Joao";
+  const avatarInitial = fullName.trim().charAt(0).toUpperCase() || "?";
+
   return (
-    <View style={styles.cardContainer}>
-      <Text style={styles.cardLocalization}>J</Text>
-      <Text style={styles.cardAvatar}>Joao</Text>
+    <View
+      style={[
+        styles.cardContainer,
+        { backgroundColor: data.cardColor || THEME.colors.primary },
+      ]}
+    >
+      <Text style={styles.cardLocalization}>{avatarInitial}</Text>
+      <Text style={styles.cardAvatar}>{fullName}</Text>
 
-      <Text style={styles.cardMeeting}>Festa do Joao</Text>
-      <Text style={styles.cardFood}>Lanche Partilhado</Text>
-      <Text style={styles.cardHours}>20:00</Text>
+      <Text style={styles.cardMeeting}>{data.partyName ?? "Festa do Joao"}</Text>
+      <Text style={styles.cardFood}>{data.food ?? "Lanche Partilhado"}</Text>
+      <Text style={styles.cardHours}>{data.hours ?? "20:00"}</Text>
       <Text style={styles.cardHours}>
-        Local: Bairro Alecrim Dourado, Rua XYZ, 40
+        Local: {data.localization ?? "Bairro Alecrim Dourado, Rua XYZ, 40"}
       </Text>
-      <Text style={styles.cardDate}>10/05/2026</Text>
+      <Text style={styles.cardDate}>{data.date ?? "10/05/2026"}</Text>
 
       <View style={styles.cardSeparator} />
 
-      <Text style={styles.cardDescription}>Festa mais do que especial</Text>
-      <Text style={styles.cardDescription}>Aniversario de 20 anos</Text>
+      <Text style={styles.cardDescription}>
+        {data.description ?? "Festa mais do que especial"}
+      </Text>
     </View>
   );
 }

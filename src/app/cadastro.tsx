@@ -5,10 +5,9 @@ import {
   StyleSheet,
   View,
   KeyboardAvoidingView,
-  TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { Button } from "../Components/Buttons";
-import { CardConvite } from "../Components/CardConvite";
 import { THEME } from "../styles/constants";
 import { Input } from "../Components/Input";
 import { ButtonGroupColors } from "../Components/ButtonGroupColors";
@@ -37,7 +36,7 @@ const CARD_COLORS = [
   },
 ];
 
-type Form = {
+export type Form = {
   fullName: string;
   partyName: string;
   food: string;
@@ -204,20 +203,23 @@ export default function CadastroScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView>
+      <KeyboardAvoidingView style={styles.keyboardContainer}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+        >
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Cadastro</Text>
-          <Text style={styles.subTitle}>
-            Preencha seus dados {JSON.stringify(form.errors)}
-          </Text>
+          <Text style={styles.subTitle}>Preencha seus dados</Text>
         </View>
 
-        <View style={{ height: 700 }}>
+        <View style={styles.formContainer}>
           <View style={{ gap: 8, marginBottom: 12 }}>
             <Input
               onChangeText={(text) => handleInputChange("fullName", text)}
               label="Nome Pessoa"
               placeholder="João Caetano"
+              defaultValue={form.data.fullName}
               onChange={() => {
                 handleInputValidation("fullName");
               }}
@@ -230,6 +232,7 @@ export default function CadastroScreen() {
               onChangeText={(text) => handleInputChange("partyName", text)}
               label="Nome Festa"
               placeholder="Festa do João"
+              defaultValue={form.data.partyName}
               errorMessage={form.errors["partyName"]}
               onChange={() => {
                 handleInputValidation("partyName");
@@ -242,6 +245,7 @@ export default function CadastroScreen() {
               onChangeText={(text) => handleInputChange("food", text)}
               label="Comidas"
               placeholder="Lanche Partilhado"
+              defaultValue={form.data.food}
               onChange={() => {
                 handleInputValidation("food");
               }}
@@ -254,6 +258,7 @@ export default function CadastroScreen() {
               onChangeText={(text) => handleInputChange("hours", text)}
               label="Horario"
               placeholder="20:00"
+              defaultValue={form.data.hours}
               onChange={() => {
                 handleInputValidation("hours");
               }}
@@ -266,6 +271,7 @@ export default function CadastroScreen() {
               onChangeText={(text) => handleInputChange("localization", text)}
               label="Localizacao"
               placeholder="Bairro Alecrim Dourado, Rua XYZ, 40"
+              defaultValue={form.data.localization}
               onChange={() => {
                 handleInputValidation("localization");
               }}
@@ -278,6 +284,7 @@ export default function CadastroScreen() {
               onChangeText={(text) => handleInputChange("date", text)}
               label="Data"
               placeholder="10/05/2026"
+              defaultValue={form.data.date}
               onChange={() => {
                 handleInputValidation("date");
               }}
@@ -290,6 +297,7 @@ export default function CadastroScreen() {
               onChangeText={(text) => handleInputChange("description", text)}
               label="Descrição"
               placeholder="Festa mais do que especial!"
+              defaultValue={form.data.description}
               onChange={() => {
                 handleInputValidation("description");
               }}
@@ -305,10 +313,10 @@ export default function CadastroScreen() {
           />
         </View>
 
-        <Text>Cor Selecionada: {form.data.cardColor}</Text>
         <View style={styles.footerContainer}>
           <Button onPress={handleSubmit} label="Cadastrar Convite" />
         </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -316,7 +324,17 @@ export default function CadastroScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     gap: 12,
+    paddingHorizontal: 24,
+    paddingVertical: 24,
+  },
+  keyboardContainer: {
+    flex: 1,
+  },
+  scrollContent: {
+    gap: 16,
+    paddingBottom: 24,
   },
   headerContainer: {
     flexDirection: "column",
@@ -337,6 +355,9 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     flexDirection: "column",
+    gap: 12,
+  },
+  formContainer: {
     gap: 12,
   },
 });

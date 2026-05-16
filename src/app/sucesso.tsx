@@ -3,8 +3,10 @@ import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { THEME } from "../styles/constants";
 import { Button } from "../Components/Buttons";
+import { useRouter } from "expo-router";
 
 export default function SucessoScreen() {
+  const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -15,8 +17,7 @@ export default function SucessoScreen() {
       </View>
 
       <View style={styles.footerContainer}>
-        <Button label="Criar outro cartão" variant={"primary"} />
-        <Button label="Voltar ao início" variant={"secondary"} />
+        <Button label="Voltar ao início" variant={"secondary"} onPress={() => router.replace("/")} />
       </View>
     </SafeAreaView>
   );
@@ -24,16 +25,16 @@ export default function SucessoScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
-    height: "100%",
-    justifyContent: "center",
+    flex: 1,
+    justifyContent: "space-between",
     paddingHorizontal: 24,
+    paddingVertical: 32,
   },
   headerContainer: {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    height: 750,
+    flex: 1,
     gap: 12,
   },
   title: {

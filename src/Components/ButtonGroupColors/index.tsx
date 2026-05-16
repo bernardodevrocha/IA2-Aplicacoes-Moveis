@@ -18,7 +18,7 @@ export function ButtonGroupColors({ group, onSelect }: Props) {
 
   function handleSelect(item: GroupItem) {
     setSelected(item);
-    onSelect(item.id);
+    onSelect(item.code);
   }
 
   useEffect(() => {
